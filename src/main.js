@@ -1,7 +1,33 @@
 document.addEventListener('DOMContentLoaded', function () {
     const buttons = document.querySelectorAll('[data-tab-button]');
     const tabs = document.querySelectorAll('[data-tab-id]');
+    const questions = document.querySelectorAll('.faq__questions__item__question'); // atualizado aqui
 
+    const  heroSection = document.querySelector('.hero');
+    const alturaHero = heroSection.clientHeight;
+
+
+    window.addEventListener('scroll', function(){
+        const posicaoAtual = window.scrollY;
+
+        if (posicaoAtual < alturaHero){
+            ocultaElementosDoHeader();
+        } else {
+            exibeElementosDoHeader();
+        }
+    })
+
+    function ocultaElementosDoHeader() {
+        const header = document.querySelector('header');
+        header.classList.add('header--is-hidden');
+    }
+
+    function exibeElementosDoHeader() {
+        const header = document.querySelector('header');
+        header.classList.remove('header--is-hidden');
+    }
+
+    // Comportamento das abas, Seção de atrações
     for (let i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener('click', function (event) {
             const abaAlvo = event.target.dataset.tabButton;
@@ -22,6 +48,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Destaca o botão clicado
             event.target.classList.add('shows__tabs__button--is-active');
+        });
+    }
+
+    // Comportamento do FAQ
+    for (let i = 0; i < questions.length; i++) {
+        questions[i].addEventListener('click', function () {
+            const item = this.parentNode; // pega o pai: .faq__questions__item
+            item.classList.toggle('faq__questions__item--is-open');
         });
     }
 });
